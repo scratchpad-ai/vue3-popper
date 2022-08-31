@@ -206,7 +206,7 @@
     show,
   } = toRefs(props);
 
-  const { isOpen, open, close } = usePopper({
+  const { isOpen, open, close, update } = usePopper({
     arrowPadding,
     emit,
     locked,
@@ -252,6 +252,8 @@
     openPopperDebounce.clear();
     closePopperDebounce();
   };
+
+  const updatePopper = update;
 
   const togglePopper = () => {
     isOpen.value ? closePopper() : openPopper();
@@ -304,6 +306,7 @@
     openPopper,
     closePopper,
     togglePopper,
+    updatePopper,
   })
 </script>
 

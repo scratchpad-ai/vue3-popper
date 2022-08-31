@@ -51,6 +51,10 @@ export default function usePopper({
     emit("open:popper");
   };
 
+  const update = () => {
+    state.popperInstance ? state.popperInstance.update() : initializePopper();
+  }
+
   // When isOpen or placement change
   watch([() => state.isOpen, placement], async ([isOpen]) => {
     if (isOpen) {
@@ -90,7 +94,7 @@ export default function usePopper({
     });
 
     // Update its position
-    state.popperInstance.update();
+    await state.popperInstance.update();
   };
 
   onBeforeUnmount(() => {
@@ -101,5 +105,6 @@ export default function usePopper({
     ...toRefs(state),
     open,
     close,
+    update,
   };
 }

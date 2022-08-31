@@ -1942,6 +1942,10 @@ function usePopper(_ref) {
 
     state.isOpen = true;
     emit("open:popper");
+  };
+
+  var update = function update() {
+    state.popperInstance ? state.popperInstance.update() : initializePopper();
   }; // When isOpen or placement change
 
 
@@ -2014,9 +2018,10 @@ function usePopper(_ref) {
                 }]
               }); // Update its position
 
-              state.popperInstance.update();
+              _context2.next = 5;
+              return state.popperInstance.update();
 
-            case 4:
+            case 5:
             case "end":
               return _context2.stop();
           }
@@ -2036,7 +2041,8 @@ function usePopper(_ref) {
   });
   return _objectSpread2(_objectSpread2({}, vue.toRefs(state)), {}, {
     open: open,
-    close: close
+    close: close,
+    update: update
   });
 }var _hoisted_1$1 = {
   id: "arrow",
@@ -2207,7 +2213,7 @@ var script = {
 
     vue.useCssVars(function (_ctx) {
       return {
-        "78b9d20a": __props.zIndex
+        "5bb18199": __props.zIndex
       };
     });
 
@@ -2250,7 +2256,8 @@ var script = {
     }),
         isOpen = _usePopper.isOpen,
         open = _usePopper.open,
-        close = _usePopper.close;
+        close = _usePopper.close,
+        update = _usePopper.update;
 
     var _useContent = useContent(slots, popperNode, content),
         hasContent = _useContent.hasContent;
@@ -2334,6 +2341,8 @@ var script = {
       };
     }();
 
+    var updatePopper = update;
+
     var togglePopper = function togglePopper() {
       isOpen.value ? closePopper() : openPopper();
     };
@@ -2388,7 +2397,8 @@ var script = {
     expose({
       openPopper: openPopper,
       closePopper: closePopper,
-      togglePopper: togglePopper
+      togglePopper: togglePopper,
+      updatePopper: updatePopper
     });
     return function (_ctx, _cache) {
       return vue.openBlock(), vue.createElementBlock("div", {
@@ -2438,8 +2448,8 @@ var script = {
       })], 36);
     };
   }
-};var css_248z = "\n.inline-block[data-v-2011466c] {\n    display: inline-block;\n}\n.popper[data-v-2011466c] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--78b9d20a);\n}\n.popper[data-v-2011466c]:hover,\n  .popper:hover > #arrow[data-v-2011466c]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-2011466c] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-2011466c],\n  .fade-leave-active[data-v-2011466c] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-2011466c],\n  .fade-leave-to[data-v-2011466c] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-2011466c";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.inline-block[data-v-bf9ed1d2] {\n    display: inline-block;\n}\n.popper[data-v-bf9ed1d2] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--5bb18199);\n}\n.popper[data-v-bf9ed1d2]:hover,\n  .popper:hover > #arrow[data-v-bf9ed1d2]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-bf9ed1d2] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-bf9ed1d2],\n  .fade-leave-active[data-v-bf9ed1d2] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-bf9ed1d2],\n  .fade-leave-to[data-v-bf9ed1d2] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-bf9ed1d2";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {
