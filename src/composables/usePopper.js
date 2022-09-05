@@ -1,6 +1,6 @@
 import { toRefs, watch, nextTick, onBeforeUnmount, reactive } from "vue";
 import { createPopper } from "@popperjs/core/lib/popper-lite.js";
-import preventOverflow from "@popperjs/core/lib/modifiers/preventOverflow.js";
+import popperPreventOverflow from "@popperjs/core/lib/modifiers/preventOverflow.js";
 import flip from "@popperjs/core/lib/modifiers/flip.js";
 import offset from "@popperjs/core/lib/modifiers/offset";
 import arrow from "@popperjs/core/lib/modifiers/arrow";
@@ -16,6 +16,7 @@ export default function usePopper({
   placement,
   popperNode,
   triggerNode,
+  preventOverflow = {},
 }) {
   const state = reactive({
     isOpen: false,
@@ -70,7 +71,14 @@ export default function usePopper({
     state.popperInstance = createPopper(triggerNode.value, popperNode.value, {
       placement: placement.value,
       modifiers: [
-        preventOverflow,
+        popperPreventOverflow,
+        {
+          name: "preventOverflow",
+          options: {
+            boundary: typeof preventOverflow.boundary === 'string' ? document.querySelector(preventOverflow.boundary) : preventOverflow.boundary,
+            padding: preventOverflow.padding,
+          },
+        },
         flip,
         {
           name: "flip",

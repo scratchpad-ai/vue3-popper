@@ -1490,7 +1490,7 @@ function preventOverflow(_ref) {
 } // eslint-disable-next-line import/no-unused-modules
 
 
-var preventOverflow$1 = {
+var popperPreventOverflow = {
   name: 'preventOverflow',
   enabled: true,
   phase: 'main',
@@ -1844,7 +1844,8 @@ function usePopper({
   offsetSkid,
   placement,
   popperNode,
-  triggerNode
+  triggerNode,
+  preventOverflow = {}
 }) {
   const state = reactive({
     isOpen: false,
@@ -1902,7 +1903,13 @@ function usePopper({
     await nextTick();
     state.popperInstance = createPopper(triggerNode.value, popperNode.value, {
       placement: placement.value,
-      modifiers: [preventOverflow$1, flip$1, {
+      modifiers: [popperPreventOverflow, {
+        name: "preventOverflow",
+        options: {
+          boundary: typeof preventOverflow.boundary === 'string' ? document.querySelector(preventOverflow.boundary) : preventOverflow.boundary,
+          padding: preventOverflow.padding
+        }
+      }, flip$1, {
         name: "flip",
         enabled: !locked.value
       }, arrow$1, {
@@ -2100,6 +2107,15 @@ var script = {
     content: {
       type: String,
       default: null
+    },
+
+    /**
+     * The preventOverflow modifier prevents the popper from being cut off by moving it so that it stays visible within its boundary area.
+     * { boundary [String, Element], padding [Number] }
+     */
+    preventOverflow: {
+      type: Object,
+      default: null
     }
   },
   emits: ["open:popper", "close:popper"],
@@ -2111,7 +2127,7 @@ var script = {
     const props = __props;
 
     useCssVars(_ctx => ({
-      "5bb18199": __props.zIndex
+      "fac412d0": __props.zIndex
     }));
 
     const slots = useSlots();
@@ -2138,7 +2154,8 @@ var script = {
       offsetSkid,
       openDelay,
       placement,
-      show
+      show,
+      preventOverflow
     } = toRefs(props);
     const {
       isOpen,
@@ -2153,7 +2170,8 @@ var script = {
       offsetSkid,
       placement,
       popperNode,
-      triggerNode
+      triggerNode,
+      preventOverflow
     });
     const {
       hasContent
@@ -2281,10 +2299,10 @@ var script = {
 
 };
 
-var css_248z = "\n.inline-block[data-v-bf9ed1d2] {\n    display: inline-block;\n}\n.popper[data-v-bf9ed1d2] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--5bb18199);\n}\n.popper[data-v-bf9ed1d2]:hover,\n  .popper:hover > #arrow[data-v-bf9ed1d2]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-bf9ed1d2] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-bf9ed1d2],\n  .fade-leave-active[data-v-bf9ed1d2] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-bf9ed1d2],\n  .fade-leave-to[data-v-bf9ed1d2] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.inline-block[data-v-927e3732] {\n    display: inline-block;\n}\n.popper[data-v-927e3732] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--fac412d0);\n}\n.popper[data-v-927e3732]:hover,\n  .popper:hover > #arrow[data-v-927e3732]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-927e3732] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-927e3732],\n  .fade-leave-active[data-v-927e3732] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-927e3732],\n  .fade-leave-to[data-v-927e3732] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-bf9ed1d2";
+script.__scopeId = "data-v-927e3732";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),

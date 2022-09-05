@@ -174,6 +174,14 @@
       type: String,
       default: null,
     },
+    /**
+     * The preventOverflow modifier prevents the popper from being cut off by moving it so that it stays visible within its boundary area.
+     * { boundary [String, Element], padding [Number] }
+     */
+    preventOverflow: {
+      type: Object,
+      default: null,
+    },
   });
 
   const popperContainerNode = ref(null);
@@ -204,6 +212,7 @@
     openDelay,
     placement,
     show,
+    preventOverflow,
   } = toRefs(props);
 
   const { isOpen, open, close, update } = usePopper({
@@ -215,6 +224,7 @@
     placement,
     popperNode,
     triggerNode,
+    preventOverflow,
   });
 
   const { hasContent } = useContent(slots, popperNode, content);
