@@ -178,14 +178,20 @@
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
-      type: Object,
       default: null,
     },
     /**
      * Applies virtual padding to the boundary. [Number]
      */
     padding: {
-      type: Object,
+      type: Number,
+      default: null,
+    },
+    /**
+     * DOM node to render the content. [String]
+     */
+    container: {
+      type: String,
       default: null,
     },
   });

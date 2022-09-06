@@ -2217,7 +2217,6 @@ var script = {
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
-      type: Object,
       default: null
     },
 
@@ -2225,7 +2224,15 @@ var script = {
      * Applies virtual padding to the boundary. [Number]
      */
     padding: {
-      type: Object,
+      type: Number,
+      default: null
+    },
+
+    /**
+     * DOM node to render the content. [String]
+     */
+    container: {
+      type: String,
       default: null
     }
   },
@@ -2237,7 +2244,7 @@ var script = {
 
     vue.useCssVars(function (_ctx) {
       return {
-        "40f46938": __props.zIndex
+        "6739f2a3": __props.zIndex
       };
     });
 
@@ -2476,8 +2483,8 @@ var script = {
       })], 36);
     };
   }
-};var css_248z = "\n.inline-block[data-v-593713d0] {\n    display: inline-block;\n}\n.popper[data-v-593713d0] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--40f46938);\n}\n.popper[data-v-593713d0]:hover,\n  .popper:hover > #arrow[data-v-593713d0]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-593713d0] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-593713d0],\n  .fade-leave-active[data-v-593713d0] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-593713d0],\n  .fade-leave-to[data-v-593713d0] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-593713d0";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.inline-block[data-v-6d4bb902] {\n    display: inline-block;\n}\n.popper[data-v-6d4bb902] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--6739f2a3);\n}\n.popper[data-v-6d4bb902]:hover,\n  .popper:hover > #arrow[data-v-6d4bb902]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-6d4bb902] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-6d4bb902],\n  .fade-leave-active[data-v-6d4bb902] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-6d4bb902],\n  .fade-leave-to[data-v-6d4bb902] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-6d4bb902";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {
