@@ -199,6 +199,7 @@
      */
     triggerWrapperClass: {
       type: [String, Object, Array],
+      default: null,
     },
   });
 
