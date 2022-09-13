@@ -1,6 +1,5 @@
 <template>
   <div
-    class="inline-block"
     :style="interactiveStyle"
     @mouseleave="hover && closePopper()"
     ref="popperContainerNode"
@@ -335,9 +334,6 @@
 </script>
 
 <style scoped>
-  .inline-block {
-    display: inline-block;
-  }
   .popper {
     transition: background 250ms ease-in-out;
     background: var(--popper-theme-background-color);
@@ -354,10 +350,6 @@
   .popper:hover,
   .popper:hover > #arrow::before {
     background: var(--popper-theme-background-color-hover);
-  }
-
-  .inline-block {
-    display: inline-block;
   }
 
   .fade-enter-active,
