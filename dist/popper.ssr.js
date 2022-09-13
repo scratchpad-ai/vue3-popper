@@ -2237,7 +2237,7 @@ var script = {
     },
 
     /**
-     * Class for the trigger wrapper
+     * Class for the trigger wrapper. [String, Object, Array]
      */
     triggerWrapperClass: {
       type: [String, Object, Array],
@@ -2252,7 +2252,7 @@ var script = {
 
     vue.useCssVars(function (_ctx) {
       return {
-        "ecafd3f0": __props.zIndex
+        "33592358": __props.zIndex
       };
     });
 
@@ -2491,8 +2491,8 @@ var script = {
       })], 36);
     };
   }
-};var css_248z = "\n.popper[data-v-d4b27298] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--ecafd3f0);\n}\n.popper[data-v-d4b27298]:hover,\n  .popper:hover > #arrow[data-v-d4b27298]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-d4b27298],\n  .fade-leave-active[data-v-d4b27298] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-d4b27298],\n  .fade-leave-to[data-v-d4b27298] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-d4b27298";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.popper[data-v-de41e4da] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--33592358);\n}\n.popper[data-v-de41e4da]:hover,\n  .popper:hover > #arrow[data-v-de41e4da]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-de41e4da],\n  .fade-leave-active[data-v-de41e4da] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-de41e4da],\n  .fade-leave-to[data-v-de41e4da] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-de41e4da";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {

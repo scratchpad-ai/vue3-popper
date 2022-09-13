@@ -195,7 +195,7 @@
       default: null,
     },
     /**
-     * Class for the trigger wrapper
+     * Class for the trigger wrapper. [String, Object, Array]
      */
     triggerWrapperClass: {
       type: [String, Object, Array],
