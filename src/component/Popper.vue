@@ -6,6 +6,7 @@
   >
     <div
       ref="triggerNode"
+      :class="triggerWrapperClass"
       @mouseover="hover && openPopper()"
       @click="togglePopper"
       @focus="openPopper"
@@ -192,6 +193,12 @@
     container: {
       type: String,
       default: null,
+    },
+    /**
+     * Class for the trigger wrapper
+     */
+    triggerWrapperClass: {
+      type: [String, Object, Array],
     },
   });
 
