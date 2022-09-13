@@ -1,4 +1,4 @@
-import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, useCssVars, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, withKeys, renderSlot, createVNode, Transition, withCtx, withDirectives, createTextVNode, toDisplayString, createBlock, createCommentVNode, vShow } from 'vue';
+import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, useCssVars, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, renderSlot, createVNode, Transition, withCtx, withDirectives, createTextVNode, toDisplayString, createBlock, createCommentVNode, vShow } from 'vue';
 
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
@@ -2131,6 +2131,13 @@ var script = {
     container: {
       type: String,
       default: null
+    },
+
+    /**
+     * Class for the trigger wrapper
+     */
+    triggerWrapperClass: {
+      type: [String, Object, Array]
     }
   },
   emits: ["open:popper", "close:popper"],
@@ -2142,7 +2149,7 @@ var script = {
     const props = __props;
 
     useCssVars(_ctx => ({
-      "6739f2a3": __props.zIndex
+      "03e867d2": __props.zIndex
     }));
 
     const slots = useSlots();
@@ -2277,7 +2284,6 @@ var script = {
     });
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", {
-        class: "inline-block",
         style: normalizeStyle(unref(interactiveStyle)),
         onMouseleave: _cache[2] || (_cache[2] = $event => __props.hover && closePopper()),
         ref: (_value, _refs) => {
@@ -2289,11 +2295,12 @@ var script = {
           _refs['triggerNode'] = _value;
           triggerNode.value = _value;
         },
+        class: normalizeClass(__props.triggerWrapperClass),
         onMouseover: _cache[0] || (_cache[0] = $event => __props.hover && openPopper()),
         onClick: togglePopper,
         onFocus: openPopper,
         onKeyup: withKeys(closePopper, ["esc"])
-      }, [renderSlot(_ctx.$slots, "default")], 40, _hoisted_1), createVNode(Transition, {
+      }, [renderSlot(_ctx.$slots, "default")], 42, _hoisted_1), createVNode(Transition, {
         name: "fade"
       }, {
         default: withCtx(() => [withDirectives(createElementVNode("div", {
@@ -2316,10 +2323,10 @@ var script = {
 
 };
 
-var css_248z = "\n.inline-block[data-v-6d4bb902] {\n    display: inline-block;\n}\n.popper[data-v-6d4bb902] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--6739f2a3);\n}\n.popper[data-v-6d4bb902]:hover,\n  .popper:hover > #arrow[data-v-6d4bb902]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-6d4bb902] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-6d4bb902],\n  .fade-leave-active[data-v-6d4bb902] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-6d4bb902],\n  .fade-leave-to[data-v-6d4bb902] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.popper[data-v-a0fa4680] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--03e867d2);\n}\n.popper[data-v-a0fa4680]:hover,\n  .popper:hover > #arrow[data-v-a0fa4680]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-a0fa4680],\n  .fade-leave-active[data-v-a0fa4680] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-a0fa4680],\n  .fade-leave-to[data-v-a0fa4680] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-6d4bb902";
+script.__scopeId = "data-v-a0fa4680";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
