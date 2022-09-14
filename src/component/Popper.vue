@@ -1,12 +1,12 @@
 <template>
   <div
-    class="inline-block"
     :style="interactiveStyle"
     @mouseleave="hover && closePopper()"
     ref="popperContainerNode"
   >
     <div
       ref="triggerNode"
+      :class="triggerWrapperClass"
       @mouseover="hover && openPopper()"
       @click="togglePopper"
       @focus="openPopper"
@@ -194,6 +194,13 @@
       type: String,
       default: null,
     },
+    /**
+     * Class for the trigger wrapper. [String, Object, Array]
+     */
+    triggerWrapperClass: {
+      type: [String, Object, Array],
+      default: null,
+    },
   });
 
   const popperContainerNode = ref(null);
@@ -335,9 +342,6 @@
 </script>
 
 <style scoped>
-  .inline-block {
-    display: inline-block;
-  }
   .popper {
     transition: background 250ms ease-in-out;
     background: var(--popper-theme-background-color);
@@ -354,10 +358,6 @@
   .popper:hover,
   .popper:hover > #arrow::before {
     background: var(--popper-theme-background-color-hover);
-  }
-
-  .inline-block {
-    display: inline-block;
   }
 
   .fade-enter-active,

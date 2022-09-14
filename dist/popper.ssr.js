@@ -2234,6 +2234,14 @@ var script = {
     container: {
       type: String,
       default: null
+    },
+
+    /**
+     * Class for the trigger wrapper. [String, Object, Array]
+     */
+    triggerWrapperClass: {
+      type: [String, Object, Array],
+      default: null
     }
   },
   emits: ["open:popper", "close:popper"],
@@ -2244,7 +2252,7 @@ var script = {
 
     vue.useCssVars(function (_ctx) {
       return {
-        "6739f2a3": __props.zIndex
+        "33592358": __props.zIndex
       };
     });
 
@@ -2437,7 +2445,6 @@ var script = {
     });
     return function (_ctx, _cache) {
       return vue.openBlock(), vue.createElementBlock("div", {
-        class: "inline-block",
         style: vue.normalizeStyle(vue.unref(interactiveStyle)),
         onMouseleave: _cache[2] || (_cache[2] = function ($event) {
           return __props.hover && closePopper();
@@ -2451,13 +2458,14 @@ var script = {
           _refs['triggerNode'] = _value;
           triggerNode.value = _value;
         },
+        class: vue.normalizeClass(__props.triggerWrapperClass),
         onMouseover: _cache[0] || (_cache[0] = function ($event) {
           return __props.hover && openPopper();
         }),
         onClick: togglePopper,
         onFocus: openPopper,
         onKeyup: vue.withKeys(closePopper, ["esc"])
-      }, [vue.renderSlot(_ctx.$slots, "default")], 40, _hoisted_1), vue.createVNode(vue.Transition, {
+      }, [vue.renderSlot(_ctx.$slots, "default")], 42, _hoisted_1), vue.createVNode(vue.Transition, {
         name: "fade"
       }, {
         default: vue.withCtx(function () {
@@ -2483,8 +2491,8 @@ var script = {
       })], 36);
     };
   }
-};var css_248z = "\n.inline-block[data-v-6d4bb902] {\n    display: inline-block;\n}\n.popper[data-v-6d4bb902] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--6739f2a3);\n}\n.popper[data-v-6d4bb902]:hover,\n  .popper:hover > #arrow[data-v-6d4bb902]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.inline-block[data-v-6d4bb902] {\n    display: inline-block;\n}\n.fade-enter-active[data-v-6d4bb902],\n  .fade-leave-active[data-v-6d4bb902] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-6d4bb902],\n  .fade-leave-to[data-v-6d4bb902] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-6d4bb902";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.popper[data-v-de41e4da] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--33592358);\n}\n.popper[data-v-de41e4da]:hover,\n  .popper:hover > #arrow[data-v-de41e4da]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-de41e4da],\n  .fade-leave-active[data-v-de41e4da] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-de41e4da],\n  .fade-leave-to[data-v-de41e4da] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-de41e4da";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {
