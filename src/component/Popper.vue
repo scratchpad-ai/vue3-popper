@@ -184,8 +184,8 @@
     /**
      * Applies virtual padding to the boundary. [Number]
      */
-    padding: {
-      type: Number,
+    boundaryPadding: {
+      type: [Number, String],
       default: null,
     },
     /**
@@ -240,7 +240,7 @@
     placement,
     show,
     boundary,
-    padding,
+    boundaryPadding,
   } = toRefs(props);
 
   const { isOpen, open, close, update } = usePopper({
@@ -253,7 +253,7 @@
     popperNode,
     triggerNode,
     boundary,
-    padding,
+    boundaryPadding,
   });
 
   const { hasContent } = useContent(slots, popperNode, content);

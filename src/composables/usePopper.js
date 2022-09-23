@@ -17,7 +17,7 @@ export default function usePopper({
   popperNode,
   triggerNode,
   boundary,
-  padding,
+  boundaryPadding,
 }) {
   const state = reactive({
     isOpen: false,
@@ -67,19 +67,27 @@ export default function usePopper({
     }
   });
 
+  const customPreventOverflowMidifier = [];
+  if (boundary.value) {
+    const customPreventOverflowMidifierOptions = {
+      boundary: typeof boundary.value === "string" ? document.querySelector(boundary.value) : boundary.value,
+    };
+    if (boundaryPadding.value) {
+      customPreventOverflowMidifierOptions.padding = toInt(boundaryPadding.value);
+    }
+    customPreventOverflowMidifier.push({
+      name: "preventOverflow",
+      options: customPreventOverflowMidifierOptions,
+    });
+  }
+
   const initializePopper = async () => {
     await nextTick();
-    state.popperInstance = createPopper(triggerNode.value, popperNode.value, {
+    const popperOptions = {
       placement: placement.value,
       modifiers: [
         preventOverflow,
-        {
-          name: "preventOverflow",
-          options: {
-            boundary: typeof boundary.value === 'string' ? document.querySelector(boundary.value) : boundary.value,
-            padding: padding.value,
-          },
-        },
+        ...customPreventOverflowMidifier,
         flip,
         {
           name: "flip",
@@ -100,7 +108,8 @@ export default function usePopper({
           },
         },
       ],
-    });
+    };
+    state.popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions);
 
     // Update its position
     await state.popperInstance.update();
