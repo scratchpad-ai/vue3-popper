@@ -20,6 +20,7 @@
         @click="!interactive && closePopper()"
         v-show="shouldShowPopper"
         class="popper"
+        :class="contentWrapperClass"
         ref="popperNode"
       >
         <slot name="content" :close="close" :isOpen="modifiedIsOpen">
@@ -198,6 +199,13 @@
      * Class for the trigger wrapper. [String, Object, Array]
      */
     triggerWrapperClass: {
+      type: [String, Object, Array],
+      default: null,
+    },
+    /**
+     * Class for the content wrapper. [String, Object, Array]
+     */
+    contentWrapperClass: {
       type: [String, Object, Array],
       default: null,
     },
