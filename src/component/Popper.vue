@@ -88,15 +88,15 @@
      * Offset in pixels along the trigger element
      */
     offsetSkid: {
-      type: String,
-      default: "0",
+      type: [Number, String],
+      default: 0,
     },
     /**
      * Offset in pixels away from the trigger element
      */
     offsetDistance: {
-      type: String,
-      default: "12",
+      type: [Number, String],
+      default: 12,
     },
     /**
      * Trigger the popper on hover
@@ -151,8 +151,8 @@
      * Stop arrow from reaching the edge of the popper
      */
     arrowPadding: {
-      type: String,
-      default: "0",
+      type: [Number, String],
+      default: 0,
     },
     /**
      * If the Popper should be interactive, it will close when clicked/hovered if false
