@@ -15,20 +15,23 @@
       <!-- The default slot to trigger the popper  -->
       <slot />
     </div>
-    <Transition name="fade">
-      <div
-        @click="!interactive && closePopper()"
-        v-show="shouldShowPopper"
-        class="popper"
-        :class="contentWrapperClass"
-        ref="popperNode"
-      >
-        <slot name="content" :close="close" :isOpen="modifiedIsOpen">
-          {{ content }}
-        </slot>
-        <Arrow v-if="arrow" />
-      </div>
-    </Transition>
+    <OptionalTeleport v-if="isMounted" :to="container" :disabled="isTeleportDisabled">
+      <Transition name="fade">
+        <div
+          @click="!interactive && closePopper()"
+          v-show="shouldShowPopper"
+          class="popper"
+          :class="contentWrapperClass"
+          :style="contentWrapperStyle"
+          ref="popperNode"
+        >
+          <slot name="content" :close="close" :isOpen="modifiedIsOpen">
+            {{ content }}
+          </slot>
+          <Arrow v-if="arrow" />
+        </div>
+      </Transition>
+    </OptionalTeleport>
   </div>
 </template>
 
@@ -47,6 +50,7 @@
   } from "vue";
   import { usePopper, useContent, useClickAway } from "@/composables";
   import Arrow from "./Arrow.vue";
+  import OptionalTeleport from "./OptionalTeleport.vue";
 
   const emit = defineEmits(["open:popper", "close:popper"]);
   const slots = useSlots();
@@ -209,12 +213,20 @@
       type: [String, Object, Array],
       default: null,
     },
+    /**
+     * Style for the content wrapper. [String, Object, Array]
+     */
+    contentWrapperStyle: {
+      type: [String, Object, Array],
+      default: null,
+    },
   });
 
   const popperContainerNode = ref(null);
   const popperNode = ref(null);
   const triggerNode = ref(null);
   const modifiedIsOpen = ref(false);
+  const isMounted = ref(false);
 
   onMounted(() => {
     const children = slots.default();
@@ -224,6 +236,8 @@
         `[Popper]: The <Popper> component expects only one child element at its root. You passed ${children.length} child nodes.`,
       );
     }
+
+    isMounted.value = true;
   });
 
   const {
@@ -241,6 +255,7 @@
     show,
     boundary,
     boundaryPadding,
+    container,
   } = toRefs(props);
 
   const { isOpen, open, close, update } = usePopper({
@@ -264,6 +279,8 @@
   const enableClickAway = computed(
     () => !disableClickAway.value && !manualMode.value,
   );
+  const isTeleportDisabled = computed(() => !container.value);
+
   // Add an invisible border to keep the Popper open when hovering from the trigger into it
   const interactiveStyle = computed(() =>
     interactive.value
@@ -337,7 +354,7 @@
    */
   watchEffect(() => {
     if (enableClickAway.value) {
-      useClickAway(popperContainerNode, closePopper);
+      useClickAway(popperContainerNode, popperNode, closePopper);
     }
   });
 
