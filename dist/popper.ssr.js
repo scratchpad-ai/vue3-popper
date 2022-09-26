@@ -2121,6 +2121,7 @@ var Arrow = script$2;var script$1 = {
   });
 }script$1.render = render;var _hoisted_1 = ["onKeyup"];
 var script = {
+  __name: 'Popper',
   props: {
     /**
      * Preferred placement (the "auto" placements will choose the side with most space.)
@@ -2489,15 +2490,11 @@ var script = {
         onMouseleave: _cache[2] || (_cache[2] = function ($event) {
           return __props.hover && closePopper();
         }),
-        ref: function ref(_value, _refs) {
-          _refs['popperContainerNode'] = _value;
-          popperContainerNode.value = _value;
-        }
+        ref_key: "popperContainerNode",
+        ref: popperContainerNode
       }, [vue.createElementVNode("div", {
-        ref: function ref(_value, _refs) {
-          _refs['triggerNode'] = _value;
-          triggerNode.value = _value;
-        },
+        ref_key: "triggerNode",
+        ref: triggerNode,
         class: vue.normalizeClass([__props.triggerWrapperClass, "popper__trigger"]),
         onMouseover: _cache[0] || (_cache[0] = function ($event) {
           return __props.hover && openPopper();
@@ -2521,10 +2518,8 @@ var script = {
                 }),
                 class: vue.normalizeClass(["popper", __props.contentWrapperClass]),
                 style: vue.normalizeStyle(__props.contentWrapperStyle),
-                ref: function ref(_value, _refs) {
-                  _refs['popperNode'] = _value;
-                  popperNode.value = _value;
-                }
+                ref_key: "popperNode",
+                ref: popperNode
               }, [vue.renderSlot(_ctx.$slots, "content", {
                 close: vue.unref(close),
                 isOpen: modifiedIsOpen.value

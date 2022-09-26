@@ -2023,6 +2023,7 @@ script$1.render = render;
 
 const _hoisted_1 = ["onKeyup"];
 var script = {
+  __name: 'Popper',
   props: {
     /**
      * Preferred placement (the "auto" placements will choose the side with most space.)
@@ -2332,15 +2333,11 @@ var script = {
       return openBlock(), createElementBlock("div", {
         style: normalizeStyle(unref(interactiveStyle)),
         onMouseleave: _cache[2] || (_cache[2] = $event => __props.hover && closePopper()),
-        ref: (_value, _refs) => {
-          _refs['popperContainerNode'] = _value;
-          popperContainerNode.value = _value;
-        }
+        ref_key: "popperContainerNode",
+        ref: popperContainerNode
       }, [createElementVNode("div", {
-        ref: (_value, _refs) => {
-          _refs['triggerNode'] = _value;
-          triggerNode.value = _value;
-        },
+        ref_key: "triggerNode",
+        ref: triggerNode,
         class: normalizeClass([__props.triggerWrapperClass, "popper__trigger"]),
         onMouseover: _cache[0] || (_cache[0] = $event => __props.hover && openPopper()),
         onClick: togglePopper,
@@ -2358,10 +2355,8 @@ var script = {
             onClick: _cache[1] || (_cache[1] = $event => !unref(interactive) && closePopper()),
             class: normalizeClass(["popper", __props.contentWrapperClass]),
             style: normalizeStyle(__props.contentWrapperStyle),
-            ref: (_value, _refs) => {
-              _refs['popperNode'] = _value;
-              popperNode.value = _value;
-            }
+            ref_key: "popperNode",
+            ref: popperNode
           }, [renderSlot(_ctx.$slots, "content", {
             close: unref(close),
             isOpen: modifiedIsOpen.value
