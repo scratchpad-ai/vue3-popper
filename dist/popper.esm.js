@@ -1922,11 +1922,6 @@ function usePopper({
 
   const initializePopper = async () => {
     await nextTick();
-
-    if (!triggerNode.value || !popperNode.value) {
-      return;
-    }
-
     const popperOptions = {
       placement: placement.value,
       modifiers: [preventOverflow$1, ...customPreventOverflowMidifier, flip$1, {

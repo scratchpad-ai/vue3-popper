@@ -2023,14 +2023,6 @@ function usePopper(_ref) {
               return vue.nextTick();
 
             case 2:
-              if (!(!triggerNode.value || !popperNode.value)) {
-                _context2.next = 4;
-                break;
-              }
-
-              return _context2.abrupt("return");
-
-            case 4:
               popperOptions = {
                 placement: placement.value,
                 modifiers: [preventOverflow$1].concat(customPreventOverflowMidifier, [flip$1, {
@@ -2050,10 +2042,10 @@ function usePopper(_ref) {
               };
               state.popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions); // Update its position
 
-              _context2.next = 8;
+              _context2.next = 6;
               return state.popperInstance.update();
 
-            case 8:
+            case 6:
             case "end":
               return _context2.stop();
           }

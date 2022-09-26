@@ -377,6 +377,7 @@
     border-style: var(--popper-theme-border-style);
     border-color: var(--popper-theme-border-color);
     box-shadow: var(--popper-theme-box-shadow);
+    z-index: var(--popper-theme-z-index);
     z-index: v-bind(zIndex);
   }
 
