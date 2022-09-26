@@ -1,14 +1,22 @@
 <template>
   <div class="app-container">
     <div class="app-wrapper">
-      <Popper container=".app-container">
+      <Popper
+        class="app-popover"
+        container=".app-container"
+        placement="top-start"
+        arrow
+      >
         <button>Toggle popper with container</button>
         <template #content>
           <div>This is the content of popper with container</div>
         </template>
       </Popper>
 
-      <Popper>
+      <Popper
+        class="app-popover"
+        placement="right-start"
+      >
         <button>Toggle popper</button>
         <template #content>
           <div>This is the content of popper</div>
@@ -40,6 +48,11 @@
     justify-content: center;
     gap: 100px;
   }
+
+  .app-popover {
+    display: flex;
+  }
+
   :root {
     --popper-theme-background-color: #ffffff;
     --popper-theme-background-color-hover: #ffffff;
