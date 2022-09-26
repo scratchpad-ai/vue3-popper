@@ -1,4 +1,4 @@
-import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, Teleport, createBlock, renderSlot, useCssVars, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, withCtx, createVNode, Transition, withDirectives, createTextVNode, toDisplayString, createCommentVNode, vShow } from 'vue';
+import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, Teleport, createBlock, renderSlot, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, withCtx, createVNode, Transition, withDirectives, createTextVNode, toDisplayString, createCommentVNode, vShow } from 'vue';
 
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
@@ -2100,14 +2100,6 @@ var script = {
     },
 
     /**
-     * The z-index of the Popper.
-     */
-    zIndex: {
-      type: [Number, String],
-      default: 9999
-    },
-
-    /**
      * Display an arrow on the popper
      */
     arrow: {
@@ -2201,11 +2193,6 @@ var script = {
     emit
   }) {
     const props = __props;
-
-    useCssVars(_ctx => ({
-      "859e9020": __props.zIndex
-    }));
-
     const slots = useSlots();
     const popperContainerNode = ref(null);
     const popperNode = ref(null);
@@ -2390,10 +2377,10 @@ var script = {
 
 };
 
-var css_248z = "\n.popper[data-v-2c8ee2a8] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n    z-index: var(--859e9020);\n}\n.popper[data-v-2c8ee2a8]:hover,\n  .popper:hover > #arrow[data-v-2c8ee2a8]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-2c8ee2a8],\n  .fade-leave-active[data-v-2c8ee2a8] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-2c8ee2a8],\n  .fade-leave-to[data-v-2c8ee2a8] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.popper[data-v-276162be] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-276162be]:hover,\n  .popper:hover > #arrow[data-v-276162be]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-276162be],\n  .fade-leave-active[data-v-276162be] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-276162be],\n  .fade-leave-to[data-v-276162be] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-2c8ee2a8";
+script.__scopeId = "data-v-276162be";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),

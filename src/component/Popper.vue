@@ -138,13 +138,6 @@
       default: 0,
     },
     /**
-     * The z-index of the Popper.
-     */
-    zIndex: {
-      type: [Number, String],
-      default: 9999,
-    },
-    /**
      * Display an arrow on the popper
      */
     arrow: {
@@ -378,7 +371,6 @@
     border-color: var(--popper-theme-border-color);
     box-shadow: var(--popper-theme-box-shadow);
     z-index: var(--popper-theme-z-index);
-    z-index: v-bind(zIndex);
   }
 
   .popper:hover,
