@@ -2354,9 +2354,6 @@ var script = {
     });
     var enableClickAway = vue.computed(function () {
       return !disableClickAway.value && !manualMode.value;
-    });
-    var isTeleportDisabled = vue.computed(function () {
-      return !container.value;
     }); // Add an invisible border to keep the Popper open when hovering from the trigger into it
 
     var interactiveStyle = vue.computed(function () {
@@ -2504,8 +2501,7 @@ var script = {
         onKeyup: vue.withKeys(closePopper, ["esc"])
       }, [vue.renderSlot(_ctx.$slots, "default")], 42, _hoisted_1), isMounted.value ? (vue.openBlock(), vue.createBlock(script$1, {
         key: 0,
-        to: vue.unref(container),
-        disabled: vue.unref(isTeleportDisabled)
+        to: vue.unref(container)
       }, {
         default: vue.withCtx(function () {
           return [vue.createVNode(vue.Transition, {
@@ -2533,11 +2529,11 @@ var script = {
           })];
         }),
         _: 3
-      }, 8, ["to", "disabled"])) : vue.createCommentVNode("", true)], 36);
+      }, 8, ["to"])) : vue.createCommentVNode("", true)], 36);
     };
   }
-};var css_248z = "\n.popper[data-v-159320c4] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-159320c4]:hover,\n  .popper:hover > .popper__arrow[data-v-159320c4]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-159320c4],\n  .fade-leave-active[data-v-159320c4] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-159320c4],\n  .fade-leave-to[data-v-159320c4] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-159320c4";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.popper[data-v-2ca71e01] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-2ca71e01]:hover,\n  .popper:hover > .popper__arrow[data-v-2ca71e01]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-2ca71e01],\n  .fade-leave-active[data-v-2ca71e01] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-2ca71e01],\n  .fade-leave-to[data-v-2ca71e01] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-2ca71e01";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {

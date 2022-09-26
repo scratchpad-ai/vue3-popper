@@ -16,7 +16,7 @@
       <!-- The default slot to trigger the popper  -->
       <slot />
     </div>
-    <OptionalTeleport v-if="isMounted" :to="container" :disabled="isTeleportDisabled">
+    <OptionalTeleport v-if="isMounted" :to="container">
       <Transition name="fade">
         <div
           @click="!interactive && closePopper()"
@@ -273,7 +273,6 @@
   const enableClickAway = computed(
     () => !disableClickAway.value && !manualMode.value,
   );
-  const isTeleportDisabled = computed(() => !container.value);
 
   // Add an invisible border to keep the Popper open when hovering from the trigger into it
   const interactiveStyle = computed(() =>
