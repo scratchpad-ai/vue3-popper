@@ -374,10 +374,6 @@
     z-index: var(--popper-theme-z-index);
   }
 
-  .popper__trigger {
-    display: flex;
-  }
-
   .popper:hover,
   .popper:hover > .popper__arrow::before {
     background: var(--popper-theme-background-color-hover);
