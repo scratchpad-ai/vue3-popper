@@ -2152,7 +2152,7 @@ var script = {
      */
     boundaryPadding: {
       type: [Number, String],
-      default: null
+      default: 5
     },
 
     /**
@@ -2372,10 +2372,10 @@ var script = {
 
 };
 
-var css_248z = "\n.popper[data-v-3f3263d2] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper__trigger[data-v-3f3263d2] {\n    display: flex;\n}\n.popper[data-v-3f3263d2]:hover,\n  .popper:hover > .popper__arrow[data-v-3f3263d2]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-3f3263d2],\n  .fade-leave-active[data-v-3f3263d2] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-3f3263d2],\n  .fade-leave-to[data-v-3f3263d2] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.popper[data-v-159320c4] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-159320c4]:hover,\n  .popper:hover > .popper__arrow[data-v-159320c4]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-159320c4],\n  .fade-leave-active[data-v-159320c4] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-159320c4],\n  .fade-leave-to[data-v-159320c4] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-3f3263d2";
+script.__scopeId = "data-v-159320c4";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),

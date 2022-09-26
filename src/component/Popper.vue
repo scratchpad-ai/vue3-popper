@@ -184,7 +184,7 @@
      */
     boundaryPadding: {
       type: [Number, String],
-      default: null,
+      default: 5,
     },
     /**
      * DOM node to render the content. [String]
