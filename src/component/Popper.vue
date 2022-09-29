@@ -91,6 +91,13 @@
       default: false,
     },
     /**
+     * A custom matcher function to stop clickaway handler
+     */
+    customClickAwayMatcher: {
+      type: Function,
+      default: null,
+    },
+    /**
      * Offset in pixels along the trigger element
      */
     offsetSkid: {
@@ -254,6 +261,7 @@
     closeDelay,
     content,
     disableClickAway,
+    customClickAwayMatcher,
     disabled,
     interactive,
     locked,
@@ -286,9 +294,7 @@
   const manualMode = computed(() => show.value !== null);
   const invalid = computed(() => disabled.value || !hasContent.value);
   const shouldShowPopper = computed(() => isOpen.value && !invalid.value);
-  const enableClickAway = computed(
-    () => !disableClickAway.value && !manualMode.value,
-  );
+  const enableClickAway = computed(() => !disableClickAway.value && !manualMode.value);
 
   // Add an invisible border to keep the Popper open when hovering from the trigger into it
   const interactiveStyle = computed(() =>
@@ -370,7 +376,7 @@
    */
   watchEffect(() => {
     if (enableClickAway.value) {
-      useClickAway(popperContainerNode, popperNode, closePopper);
+      useClickAway(popperContainerNode, popperNode, customClickAwayMatcher.value, closePopper);
     }
   });
 
