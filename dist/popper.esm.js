@@ -121,7 +121,11 @@ function useContent(slots, popperNode, content) {
       hasContent.value = true;
     }
   });
-  onBeforeUnmount(() => observer.disconnect());
+  onBeforeUnmount(() => {
+    if (observer) {
+      observer.disconnect();
+    }
+  });
   watch(popperNode, popperNode => {
     if (!observer) {
       observer = new MutationObserver(checkContent);

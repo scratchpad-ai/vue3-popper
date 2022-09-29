@@ -9,7 +9,11 @@ export default function useContent(slots, popperNode, content) {
     }
   });
 
-  onBeforeUnmount(() => observer.disconnect());
+  onBeforeUnmount(() => {
+    if (observer) {
+      observer.disconnect()
+    }
+  });
 
   watch(popperNode, popperNode => {
     if (!observer) {

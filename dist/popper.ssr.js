@@ -276,7 +276,9 @@ var debounce_1 = debounce$1;function useEventListener(target, event, handler) {
     }
   });
   vue.onBeforeUnmount(function () {
-    return observer.disconnect();
+    if (observer) {
+      observer.disconnect();
+    }
   });
   vue.watch(popperNode, function (popperNode) {
     if (!observer) {
