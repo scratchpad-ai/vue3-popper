@@ -10,7 +10,7 @@
       :style="triggerWrapperStyle"
       class="popper__trigger"
       @mouseover="hover && openPopper()"
-      @click="togglePopper"
+      @click="onTriggerClick"
       @focus="openPopper"
       @keyup.esc="closePopper"
     >
@@ -209,6 +209,13 @@
       default: null,
     },
     /**
+     * Stops propagation of the event on clicking the trigger element. [Boolean]
+     */
+    triggerStopPropagation: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      * Class for the content wrapper. [String, Object, Array]
      */
     contentWrapperClass: {
@@ -258,6 +265,7 @@
     boundary,
     boundaryPadding,
     container,
+    triggerStopPropagation,
   } = toRefs(props);
 
   const { isOpen, open, close, update } = usePopper({
@@ -314,6 +322,13 @@
 
   const togglePopper = () => {
     isOpen.value ? closePopper() : openPopper();
+  };
+
+  const onTriggerClick = (e) => {
+    togglePopper();
+    if (triggerStopPropagation.value) {
+      e.stopPropagation();
+    }
   };
 
   /**
