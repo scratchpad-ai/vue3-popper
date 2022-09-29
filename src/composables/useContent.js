@@ -7,15 +7,19 @@ export default function useContent(slots, popperNode, content) {
     if (slots.content !== undefined || content.value) {
       hasContent.value = true;
     }
-
-    observer = new MutationObserver(checkContent);
-    observer.observe(popperNode.value, {
-      childList: true,
-      subtree: true,
-    });
   });
 
   onBeforeUnmount(() => observer.disconnect());
+
+  watch(popperNode, popperNode => {
+    if (!observer) {
+      observer = new MutationObserver(checkContent);
+      observer.observe(popperNode, {
+        childList: true,
+        subtree: true,
+      });
+    }
+  });
 
   /**
    * Watch the content prop

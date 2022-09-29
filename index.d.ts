@@ -26,7 +26,6 @@ declare module "vue3-popper" {
     disabled?: boolean;
     openDelay?: number | string;
     closeDelay?: number | string;
-    zIndex?: number | string;
     arrow?: boolean;
     arrowPadding?: string;
     interactive?: boolean;

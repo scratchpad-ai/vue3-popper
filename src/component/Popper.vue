@@ -7,6 +7,8 @@
     <div
       ref="triggerNode"
       :class="triggerWrapperClass"
+      :style="triggerWrapperStyle"
+      class="popper__trigger"
       @mouseover="hover && openPopper()"
       @click="togglePopper"
       @focus="openPopper"
@@ -15,19 +17,23 @@
       <!-- The default slot to trigger the popper  -->
       <slot />
     </div>
-    <Transition name="fade">
-      <div
-        @click="!interactive && closePopper()"
-        v-show="shouldShowPopper"
-        class="popper"
-        ref="popperNode"
-      >
-        <slot name="content" :close="close" :isOpen="modifiedIsOpen">
-          {{ content }}
-        </slot>
-        <Arrow v-if="arrow" />
-      </div>
-    </Transition>
+    <OptionalTeleport v-if="isMounted" :to="container">
+      <Transition name="fade">
+        <div
+          @click="!interactive && closePopper()"
+          v-show="shouldShowPopper"
+          class="popper"
+          :class="contentWrapperClass"
+          :style="contentWrapperStyle"
+          ref="popperNode"
+        >
+          <slot name="content" :close="close" :isOpen="modifiedIsOpen">
+            {{ content }}
+          </slot>
+          <Arrow v-if="arrow" />
+        </div>
+      </Transition>
+    </OptionalTeleport>
   </div>
 </template>
 
@@ -46,6 +52,7 @@
   } from "vue";
   import { usePopper, useContent, useClickAway } from "@/composables";
   import Arrow from "./Arrow.vue";
+  import OptionalTeleport from "./OptionalTeleport.vue";
 
   const emit = defineEmits(["open:popper", "close:popper"]);
   const slots = useSlots();
@@ -87,15 +94,15 @@
      * Offset in pixels along the trigger element
      */
     offsetSkid: {
-      type: String,
-      default: "0",
+      type: [Number, String],
+      default: 0,
     },
     /**
      * Offset in pixels away from the trigger element
      */
     offsetDistance: {
-      type: String,
-      default: "12",
+      type: [Number, String],
+      default: 12,
     },
     /**
      * Trigger the popper on hover
@@ -133,13 +140,6 @@
       default: 0,
     },
     /**
-     * The z-index of the Popper.
-     */
-    zIndex: {
-      type: [Number, String],
-      default: 9999,
-    },
-    /**
      * Display an arrow on the popper
      */
     arrow: {
@@ -150,8 +150,8 @@
      * Stop arrow from reaching the edge of the popper
      */
     arrowPadding: {
-      type: String,
-      default: "0",
+      type: [Number, String],
+      default: 0,
     },
     /**
      * If the Popper should be interactive, it will close when clicked/hovered if false
@@ -183,9 +183,9 @@
     /**
      * Applies virtual padding to the boundary. [Number]
      */
-    padding: {
-      type: Number,
-      default: null,
+    boundaryPadding: {
+      type: [Number, String],
+      default: 5,
     },
     /**
      * DOM node to render the content. [String]
@@ -201,12 +201,34 @@
       type: [String, Object, Array],
       default: null,
     },
+    /**
+     * Style for the trigger wrapper. [String, Object, Array]
+     */
+    triggerWrapperStyle: {
+      type: [String, Object, Array],
+      default: null,
+    },
+    /**
+     * Class for the content wrapper. [String, Object, Array]
+     */
+    contentWrapperClass: {
+      type: [String, Object, Array],
+      default: null,
+    },
+    /**
+     * Style for the content wrapper. [String, Object, Array]
+     */
+    contentWrapperStyle: {
+      type: [String, Object, Array],
+      default: null,
+    },
   });
 
   const popperContainerNode = ref(null);
   const popperNode = ref(null);
   const triggerNode = ref(null);
   const modifiedIsOpen = ref(false);
+  const isMounted = ref(false);
 
   onMounted(() => {
     const children = slots.default();
@@ -216,6 +238,8 @@
         `[Popper]: The <Popper> component expects only one child element at its root. You passed ${children.length} child nodes.`,
       );
     }
+
+    isMounted.value = true;
   });
 
   const {
@@ -232,7 +256,8 @@
     placement,
     show,
     boundary,
-    padding,
+    boundaryPadding,
+    container,
   } = toRefs(props);
 
   const { isOpen, open, close, update } = usePopper({
@@ -245,7 +270,7 @@
     popperNode,
     triggerNode,
     boundary,
-    padding,
+    boundaryPadding,
   });
 
   const { hasContent } = useContent(slots, popperNode, content);
@@ -256,6 +281,7 @@
   const enableClickAway = computed(
     () => !disableClickAway.value && !manualMode.value,
   );
+
   // Add an invisible border to keep the Popper open when hovering from the trigger into it
   const interactiveStyle = computed(() =>
     interactive.value
@@ -329,7 +355,7 @@
    */
   watchEffect(() => {
     if (enableClickAway.value) {
-      useClickAway(popperContainerNode, closePopper);
+      useClickAway(popperContainerNode, popperNode, closePopper);
     }
   });
 
@@ -352,11 +378,11 @@
     border-style: var(--popper-theme-border-style);
     border-color: var(--popper-theme-border-color);
     box-shadow: var(--popper-theme-box-shadow);
-    z-index: v-bind(zIndex);
+    z-index: var(--popper-theme-z-index);
   }
 
   .popper:hover,
-  .popper:hover > #arrow::before {
+  .popper:hover > .popper__arrow::before {
     background: var(--popper-theme-background-color-hover);
   }
 

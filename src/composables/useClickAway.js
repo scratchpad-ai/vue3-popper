@@ -1,20 +1,26 @@
 import { unref } from "vue";
 import useEventListener from "./useEventListener";
 
-export default function useClickAway(target, handler) {
+export default function useClickAway(targetContainer, targetContent, handler) {
   const event = "pointerdown";
 
-  if (typeof window === 'undefined' || !window) {
+  if (typeof window === "undefined" || !window) {
     return;
   }
 
   const listener = event => {
-    const el = unref(target);
-    if (!el) {
+    const targetContainerEl = unref(targetContainer);
+    const targetContentEl = unref(targetContent);
+    if (!targetContainerEl && !targetContentEl) {
       return;
     }
 
-    if (el === event.target || event.composedPath().includes(el)) {
+    if (
+      targetContainerEl === event.target ||
+      targetContentEl === event.target ||
+      event.composedPath().includes(targetContainerEl) ||
+      event.composedPath().includes(targetContentEl)
+    ) {
       return;
     }
 

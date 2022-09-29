@@ -1,4 +1,4 @@
-import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, useCssVars, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, renderSlot, createVNode, Transition, withCtx, withDirectives, createTextVNode, toDisplayString, createBlock, createCommentVNode, vShow } from 'vue';
+import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, Teleport, createBlock, renderSlot, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, withCtx, createVNode, Transition, withDirectives, createTextVNode, toDisplayString, createCommentVNode, vShow } from 'vue';
 
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
@@ -88,21 +88,22 @@ function useEventListener(target, event, handler) {
   });
 }
 
-function useClickAway(target, handler) {
+function useClickAway(targetContainer, targetContent, handler) {
   const event = "pointerdown";
 
-  if (typeof window === 'undefined' || !window) {
+  if (typeof window === "undefined" || !window) {
     return;
   }
 
   const listener = event => {
-    const el = unref(target);
+    const targetContainerEl = unref(targetContainer);
+    const targetContentEl = unref(targetContent);
 
-    if (!el) {
+    if (!targetContainerEl && !targetContentEl) {
       return;
     }
 
-    if (el === event.target || event.composedPath().includes(el)) {
+    if (targetContainerEl === event.target || targetContentEl === event.target || event.composedPath().includes(targetContainerEl) || event.composedPath().includes(targetContentEl)) {
       return;
     }
 
@@ -119,14 +120,17 @@ function useContent(slots, popperNode, content) {
     if (slots.content !== undefined || content.value) {
       hasContent.value = true;
     }
-
-    observer = new MutationObserver(checkContent);
-    observer.observe(popperNode.value, {
-      childList: true,
-      subtree: true
-    });
   });
   onBeforeUnmount(() => observer.disconnect());
+  watch(popperNode, popperNode => {
+    if (!observer) {
+      observer = new MutationObserver(checkContent);
+      observer.observe(popperNode, {
+        childList: true,
+        subtree: true
+      });
+    }
+  });
   /**
    * Watch the content prop
    */
@@ -1846,7 +1850,7 @@ function usePopper({
   popperNode,
   triggerNode,
   boundary,
-  padding
+  boundaryPadding
 }) {
   const state = reactive({
     isOpen: false,
@@ -1899,18 +1903,28 @@ function usePopper({
       disablePopperEventListeners();
     }
   });
+  const customPreventOverflowMidifier = [];
+
+  if (boundary.value) {
+    const customPreventOverflowMidifierOptions = {
+      boundary: typeof boundary.value === "string" ? document.querySelector(boundary.value) : boundary.value
+    };
+
+    if (boundaryPadding.value) {
+      customPreventOverflowMidifierOptions.padding = toInt(boundaryPadding.value);
+    }
+
+    customPreventOverflowMidifier.push({
+      name: "preventOverflow",
+      options: customPreventOverflowMidifierOptions
+    });
+  }
 
   const initializePopper = async () => {
     await nextTick();
-    state.popperInstance = createPopper(triggerNode.value, popperNode.value, {
+    const popperOptions = {
       placement: placement.value,
-      modifiers: [preventOverflow$1, {
-        name: "preventOverflow",
-        options: {
-          boundary: typeof boundary.value === 'string' ? document.querySelector(boundary.value) : boundary.value,
-          padding: padding.value
-        }
-      }, flip$1, {
+      modifiers: [preventOverflow$1, ...customPreventOverflowMidifier, flip$1, {
         name: "flip",
         enabled: !locked.value
       }, arrow$1, {
@@ -1924,7 +1938,8 @@ function usePopper({
           offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)]
         }
       }]
-    }); // Update its position
+    };
+    state.popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions); // Update its position
 
     await state.popperInstance.update();
   };
@@ -1942,10 +1957,10 @@ function usePopper({
 }
 
 const _hoisted_1$1 = {
-  id: "arrow",
+  class: "popper__arrow",
   "data-popper-arrow": ""
 };
-function render(_ctx, _cache) {
+function render$1(_ctx, _cache) {
   return openBlock(), createElementBlock("div", _hoisted_1$1);
 }
 
@@ -1976,16 +1991,39 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$1 = "\n#arrow[data-v-20b7fd4a],\n  #arrow[data-v-20b7fd4a]::before {\n    transition: background 250ms ease-in-out;\n    position: absolute;\n    width: calc(10px - var(--popper-theme-border-width, 0px));\n    height: calc(10px - var(--popper-theme-border-width, 0px));\n    box-sizing: border-box;\n    background: var(--popper-theme-background-color);\n}\n#arrow[data-v-20b7fd4a] {\n    visibility: hidden;\n}\n#arrow[data-v-20b7fd4a]::before {\n    visibility: visible;\n    content: \"\";\n    transform: rotate(45deg);\n}\n\n  /* Top arrow */\n.popper[data-popper-placement^=\"top\"] > #arrow[data-v-20b7fd4a] {\n    bottom: -5px;\n}\n.popper[data-popper-placement^=\"top\"] > #arrow[data-v-20b7fd4a]::before {\n    border-right: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n    border-bottom: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n}\n\n  /* Bottom arrow */\n.popper[data-popper-placement^=\"bottom\"] > #arrow[data-v-20b7fd4a] {\n    top: -5px;\n}\n.popper[data-popper-placement^=\"bottom\"] > #arrow[data-v-20b7fd4a]::before {\n    border-left: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n    border-top: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n}\n\n  /* Left arrow */\n.popper[data-popper-placement^=\"left\"] > #arrow[data-v-20b7fd4a] {\n    right: -5px;\n}\n.popper[data-popper-placement^=\"left\"] > #arrow[data-v-20b7fd4a]::before {\n    border-right: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n    border-top: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n}\n\n  /* Right arrow */\n.popper[data-popper-placement^=\"right\"] > #arrow[data-v-20b7fd4a] {\n    left: -5px;\n}\n";
+var css_248z$1 = "\n.popper__arrow[data-v-6591bbd2],\n  .popper__arrow[data-v-6591bbd2]::before {\n    transition: background 250ms ease-in-out;\n    position: absolute;\n    width: calc(10px - var(--popper-theme-border-width, 0px));\n    height: calc(10px - var(--popper-theme-border-width, 0px));\n    box-sizing: border-box;\n    background: var(--popper-theme-background-color);\n}\n.popper__arrow[data-v-6591bbd2] {\n    visibility: hidden;\n}\n.popper__arrow[data-v-6591bbd2]::before {\n    visibility: visible;\n    content: \"\";\n    transform: rotate(45deg);\n}\n\n  /* Top arrow */\n.popper[data-popper-placement^=\"top\"] > .popper__arrow[data-v-6591bbd2] {\n    bottom: -5px;\n}\n.popper[data-popper-placement^=\"top\"] > .popper__arrow[data-v-6591bbd2]::before {\n    border-right: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n    border-bottom: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n}\n\n  /* Bottom arrow */\n.popper[data-popper-placement^=\"bottom\"] > .popper__arrow[data-v-6591bbd2] {\n    top: -5px;\n}\n.popper[data-popper-placement^=\"bottom\"] > .popper__arrow[data-v-6591bbd2]::before {\n    border-left: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n    border-top: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n}\n\n  /* Left arrow */\n.popper[data-popper-placement^=\"left\"] > .popper__arrow[data-v-6591bbd2] {\n    right: -5px;\n}\n.popper[data-popper-placement^=\"left\"] > .popper__arrow[data-v-6591bbd2]::before {\n    border-right: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n    border-top: var(--popper-theme-border-width)\n      var(--popper-theme-border-style) var(--popper-theme-border-color);\n}\n\n  /* Right arrow */\n.popper[data-popper-placement^=\"right\"] > .popper__arrow[data-v-6591bbd2] {\n    left: -5px;\n}\n";
 styleInject(css_248z$1);
 
-const script$1 = {};
+const script$2 = {};
+script$2.render = render$1;
+script$2.__scopeId = "data-v-6591bbd2";
+var Arrow = script$2;
+
+var script$1 = {
+  props: {
+    to: String,
+    disabled: Boolean
+  },
+  components: {
+    Teleport
+  }
+};
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return $props.to ? (openBlock(), createBlock(Teleport, {
+    key: 0,
+    to: $props.to,
+    disabled: $props.disabled
+  }, [renderSlot(_ctx.$slots, "default")], 8, ["to", "disabled"])) : renderSlot(_ctx.$slots, "default", {
+    key: 1
+  });
+}
+
 script$1.render = render;
-script$1.__scopeId = "data-v-20b7fd4a";
-var Arrow = script$1;
 
 const _hoisted_1 = ["onKeyup"];
 var script = {
+  __name: 'Popper',
   props: {
     /**
      * Preferred placement (the "auto" placements will choose the side with most space.)
@@ -2010,16 +2048,16 @@ var script = {
      * Offset in pixels along the trigger element
      */
     offsetSkid: {
-      type: String,
-      default: "0"
+      type: [Number, String],
+      default: 0
     },
 
     /**
      * Offset in pixels away from the trigger element
      */
     offsetDistance: {
-      type: String,
-      default: "12"
+      type: [Number, String],
+      default: 12
     },
 
     /**
@@ -2063,14 +2101,6 @@ var script = {
     },
 
     /**
-     * The z-index of the Popper.
-     */
-    zIndex: {
-      type: [Number, String],
-      default: 9999
-    },
-
-    /**
      * Display an arrow on the popper
      */
     arrow: {
@@ -2082,8 +2112,8 @@ var script = {
      * Stop arrow from reaching the edge of the popper
      */
     arrowPadding: {
-      type: String,
-      default: "0"
+      type: [Number, String],
+      default: 0
     },
 
     /**
@@ -2120,9 +2150,9 @@ var script = {
     /**
      * Applies virtual padding to the boundary. [Number]
      */
-    padding: {
-      type: Number,
-      default: null
+    boundaryPadding: {
+      type: [Number, String],
+      default: 5
     },
 
     /**
@@ -2139,6 +2169,30 @@ var script = {
     triggerWrapperClass: {
       type: [String, Object, Array],
       default: null
+    },
+
+    /**
+     * Style for the trigger wrapper. [String, Object, Array]
+     */
+    triggerWrapperStyle: {
+      type: [String, Object, Array],
+      default: null
+    },
+
+    /**
+     * Class for the content wrapper. [String, Object, Array]
+     */
+    contentWrapperClass: {
+      type: [String, Object, Array],
+      default: null
+    },
+
+    /**
+     * Style for the content wrapper. [String, Object, Array]
+     */
+    contentWrapperStyle: {
+      type: [String, Object, Array],
+      default: null
     }
   },
   emits: ["open:popper", "close:popper"],
@@ -2148,22 +2202,20 @@ var script = {
     emit
   }) {
     const props = __props;
-
-    useCssVars(_ctx => ({
-      "33592358": __props.zIndex
-    }));
-
     const slots = useSlots();
     const popperContainerNode = ref(null);
     const popperNode = ref(null);
     const triggerNode = ref(null);
     const modifiedIsOpen = ref(false);
+    const isMounted = ref(false);
     onMounted(() => {
       const children = slots.default();
 
       if (children && children.length > 1) {
         return console.error(`[Popper]: The <Popper> component expects only one child element at its root. You passed ${children.length} child nodes.`);
       }
+
+      isMounted.value = true;
     });
     const {
       arrowPadding,
@@ -2179,7 +2231,8 @@ var script = {
       placement,
       show,
       boundary,
-      padding
+      boundaryPadding,
+      container
     } = toRefs(props);
     const {
       isOpen,
@@ -2196,7 +2249,7 @@ var script = {
       popperNode,
       triggerNode,
       boundary,
-      padding
+      boundaryPadding
     });
     const {
       hasContent
@@ -2274,7 +2327,7 @@ var script = {
 
     watchEffect(() => {
       if (enableClickAway.value) {
-        useClickAway(popperContainerNode, closePopper);
+        useClickAway(popperContainerNode, popperNode, closePopper);
       }
     });
     expose({
@@ -2287,47 +2340,49 @@ var script = {
       return openBlock(), createElementBlock("div", {
         style: normalizeStyle(unref(interactiveStyle)),
         onMouseleave: _cache[2] || (_cache[2] = $event => __props.hover && closePopper()),
-        ref: (_value, _refs) => {
-          _refs['popperContainerNode'] = _value;
-          popperContainerNode.value = _value;
-        }
+        ref_key: "popperContainerNode",
+        ref: popperContainerNode
       }, [createElementVNode("div", {
-        ref: (_value, _refs) => {
-          _refs['triggerNode'] = _value;
-          triggerNode.value = _value;
-        },
-        class: normalizeClass(__props.triggerWrapperClass),
+        ref_key: "triggerNode",
+        ref: triggerNode,
+        class: normalizeClass([__props.triggerWrapperClass, "popper__trigger"]),
+        style: normalizeStyle(__props.triggerWrapperStyle),
         onMouseover: _cache[0] || (_cache[0] = $event => __props.hover && openPopper()),
         onClick: togglePopper,
         onFocus: openPopper,
         onKeyup: withKeys(closePopper, ["esc"])
-      }, [renderSlot(_ctx.$slots, "default")], 42, _hoisted_1), createVNode(Transition, {
-        name: "fade"
+      }, [renderSlot(_ctx.$slots, "default")], 46, _hoisted_1), isMounted.value ? (openBlock(), createBlock(script$1, {
+        key: 0,
+        to: unref(container)
       }, {
-        default: withCtx(() => [withDirectives(createElementVNode("div", {
-          onClick: _cache[1] || (_cache[1] = $event => !unref(interactive) && closePopper()),
-          class: "popper",
-          ref: (_value, _refs) => {
-            _refs['popperNode'] = _value;
-            popperNode.value = _value;
-          }
-        }, [renderSlot(_ctx.$slots, "content", {
-          close: unref(close),
-          isOpen: modifiedIsOpen.value
-        }, () => [createTextVNode(toDisplayString(unref(content)), 1)]), __props.arrow ? (openBlock(), createBlock(Arrow, {
-          key: 0
-        })) : createCommentVNode("", true)], 512), [[vShow, unref(shouldShowPopper)]])]),
+        default: withCtx(() => [createVNode(Transition, {
+          name: "fade"
+        }, {
+          default: withCtx(() => [withDirectives(createElementVNode("div", {
+            onClick: _cache[1] || (_cache[1] = $event => !unref(interactive) && closePopper()),
+            class: normalizeClass(["popper", __props.contentWrapperClass]),
+            style: normalizeStyle(__props.contentWrapperStyle),
+            ref_key: "popperNode",
+            ref: popperNode
+          }, [renderSlot(_ctx.$slots, "content", {
+            close: unref(close),
+            isOpen: modifiedIsOpen.value
+          }, () => [createTextVNode(toDisplayString(unref(content)), 1)]), __props.arrow ? (openBlock(), createBlock(Arrow, {
+            key: 0
+          })) : createCommentVNode("", true)], 6), [[vShow, unref(shouldShowPopper)]])]),
+          _: 3
+        })]),
         _: 3
-      })], 36);
+      }, 8, ["to"])) : createCommentVNode("", true)], 36);
     };
   }
 
 };
 
-var css_248z = "\n.popper[data-v-de41e4da] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--33592358);\n}\n.popper[data-v-de41e4da]:hover,\n  .popper:hover > #arrow[data-v-de41e4da]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-de41e4da],\n  .fade-leave-active[data-v-de41e4da] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-de41e4da],\n  .fade-leave-to[data-v-de41e4da] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.popper[data-v-242d7f07] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-242d7f07]:hover,\n  .popper:hover > .popper__arrow[data-v-242d7f07]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-242d7f07],\n  .fade-leave-active[data-v-242d7f07] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-242d7f07],\n  .fade-leave-to[data-v-242d7f07] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-de41e4da";
+script.__scopeId = "data-v-242d7f07";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
