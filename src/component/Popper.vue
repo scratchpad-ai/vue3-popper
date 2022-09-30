@@ -50,7 +50,7 @@
     onMounted,
     defineExpose,
   } from "vue";
-  import { usePopper, useContent, useClickAway } from "@/composables";
+  import { usePopper, useClickAway } from "@/composables";
   import Arrow from "./Arrow.vue";
   import OptionalTeleport from "./OptionalTeleport.vue";
 
@@ -289,11 +289,8 @@
     boundaryPadding,
   });
 
-  const { hasContent } = useContent(slots, popperNode, content);
-
   const manualMode = computed(() => show.value !== null);
-  const invalid = computed(() => disabled.value || !hasContent.value);
-  const shouldShowPopper = computed(() => isOpen.value && !invalid.value);
+  const shouldShowPopper = computed(() => isOpen.value && !disabled.value);
   const enableClickAway = computed(() => !disableClickAway.value && !manualMode.value);
 
   // Add an invisible border to keep the Popper open when hovering from the trigger into it
@@ -307,7 +304,7 @@
   const closePopperDebounce = debounce(close, closeDelay.value);
 
   const openPopper = async () => {
-    if (invalid.value || manualMode.value) {
+    if (disabled.value || manualMode.value) {
       return;
     }
 
@@ -341,8 +338,8 @@
    * If Popper is open, we automatically close it if it becomes
    * disabled or without content.
    */
-  watch([hasContent, disabled], ([hasContent, disabled]) => {
-    if (isOpen.value && (!hasContent || disabled)) {
+  watch(disabled, (disabled) => {
+    if (isOpen.value && disabled) {
       close();
     }
   });
