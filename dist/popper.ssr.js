@@ -271,54 +271,6 @@ var debounce_1 = debounce$1;function useEventListener(target, event, handler) {
   };
 
   return useEventListener(window, event, listener);
-}function useContent(slots, popperNode, content) {
-  var observer = null;
-  var hasContent = vue.ref(false);
-  vue.onMounted(function () {
-    if (slots.content !== undefined || content.value) {
-      hasContent.value = true;
-    }
-  });
-  vue.onBeforeUnmount(function () {
-    if (observer) {
-      observer.disconnect();
-    }
-  });
-  vue.watch(popperNode, function (popperNode) {
-    if (!observer) {
-      observer = new MutationObserver(checkContent);
-      observer.observe(popperNode, {
-        childList: true,
-        subtree: true
-      });
-    }
-  });
-  /**
-   * Watch the content prop
-   */
-
-  vue.watch(content, function (content) {
-    if (content) {
-      hasContent.value = true;
-    } else {
-      hasContent.value = false;
-    }
-  });
-  /**
-   * Check the content slot
-   */
-
-  var checkContent = function checkContent() {
-    if (slots.content) {
-      hasContent.value = true;
-    } else {
-      hasContent.value = false;
-    }
-  };
-
-  return {
-    hasContent: hasContent
-  };
 }// import { isHTMLElement } from './instanceOf';
 function getBoundingClientRect(element, // eslint-disable-next-line unused-imports/no-unused-vars
 includeScale) {
@@ -2372,17 +2324,11 @@ var script = {
         close = _usePopper.close,
         update = _usePopper.update;
 
-    var _useContent = useContent(slots, popperNode, content),
-        hasContent = _useContent.hasContent;
-
     var manualMode = vue.computed(function () {
       return show.value !== null;
     });
-    var invalid = vue.computed(function () {
-      return disabled.value || !hasContent.value;
-    });
     var shouldShowPopper = vue.computed(function () {
-      return isOpen.value && !invalid.value;
+      return isOpen.value && !disabled.value;
     });
     var enableClickAway = vue.computed(function () {
       return !disableClickAway.value && !manualMode.value;
@@ -2400,7 +2346,7 @@ var script = {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(invalid.value || manualMode.value)) {
+                if (!(disabled.value || manualMode.value)) {
                   _context.next = 2;
                   break;
                 }
@@ -2473,12 +2419,8 @@ var script = {
      */
 
 
-    vue.watch([hasContent, disabled], function (_ref4) {
-      var _ref5 = _slicedToArray(_ref4, 2),
-          hasContent = _ref5[0],
-          disabled = _ref5[1];
-
-      if (isOpen.value && (!hasContent || disabled)) {
+    vue.watch(disabled, function (disabled) {
+      if (isOpen.value && disabled) {
         close();
       }
     });
@@ -2573,8 +2515,8 @@ var script = {
       }, 8, ["to"])) : vue.createCommentVNode("", true)], 36);
     };
   }
-};var css_248z = "\n.popper[data-v-a0197972] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-a0197972]:hover,\n  .popper:hover > .popper__arrow[data-v-a0197972]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-a0197972],\n  .fade-leave-active[data-v-a0197972] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-a0197972],\n  .fade-leave-to[data-v-a0197972] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-a0197972";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.popper[data-v-4e8e6007] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-4e8e6007]:hover,\n  .popper:hover > .popper__arrow[data-v-4e8e6007]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-4e8e6007],\n  .fade-leave-active[data-v-4e8e6007] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-4e8e6007],\n  .fade-leave-to[data-v-4e8e6007] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-4e8e6007";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {

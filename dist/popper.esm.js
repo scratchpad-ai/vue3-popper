@@ -1,4 +1,4 @@
-import { isRef, watch, onMounted, onBeforeUnmount, unref, ref, reactive, nextTick, toRefs, openBlock, createElementBlock, Teleport, createBlock, renderSlot, useSlots, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, withCtx, createVNode, Transition, withDirectives, createTextVNode, toDisplayString, createCommentVNode, vShow } from 'vue';
+import { isRef, watch, onMounted, onBeforeUnmount, unref, reactive, nextTick, toRefs, openBlock, createElementBlock, Teleport, createBlock, renderSlot, useSlots, ref, computed, watchEffect, normalizeStyle, createElementVNode, normalizeClass, withKeys, withCtx, createVNode, Transition, withDirectives, createTextVNode, toDisplayString, createCommentVNode, vShow } from 'vue';
 
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
@@ -115,56 +115,6 @@ function useClickAway(targetContainer, targetContent, customMatcherFn, handler) 
   };
 
   return useEventListener(window, event, listener);
-}
-
-function useContent(slots, popperNode, content) {
-  let observer = null;
-  const hasContent = ref(false);
-  onMounted(() => {
-    if (slots.content !== undefined || content.value) {
-      hasContent.value = true;
-    }
-  });
-  onBeforeUnmount(() => {
-    if (observer) {
-      observer.disconnect();
-    }
-  });
-  watch(popperNode, popperNode => {
-    if (!observer) {
-      observer = new MutationObserver(checkContent);
-      observer.observe(popperNode, {
-        childList: true,
-        subtree: true
-      });
-    }
-  });
-  /**
-   * Watch the content prop
-   */
-
-  watch(content, content => {
-    if (content) {
-      hasContent.value = true;
-    } else {
-      hasContent.value = false;
-    }
-  });
-  /**
-   * Check the content slot
-   */
-
-  const checkContent = () => {
-    if (slots.content) {
-      hasContent.value = true;
-    } else {
-      hasContent.value = false;
-    }
-  };
-
-  return {
-    hasContent
-  };
 }
 
 // import { isHTMLElement } from './instanceOf';
@@ -2277,12 +2227,8 @@ var script = {
       boundary,
       boundaryPadding
     });
-    const {
-      hasContent
-    } = useContent(slots, popperNode, content);
     const manualMode = computed(() => show.value !== null);
-    const invalid = computed(() => disabled.value || !hasContent.value);
-    const shouldShowPopper = computed(() => isOpen.value && !invalid.value);
+    const shouldShowPopper = computed(() => isOpen.value && !disabled.value);
     const enableClickAway = computed(() => !disableClickAway.value && !manualMode.value); // Add an invisible border to keep the Popper open when hovering from the trigger into it
 
     const interactiveStyle = computed(() => interactive.value ? `border: ${offsetDistance.value}px solid transparent; margin: -${offsetDistance.value}px;` : null);
@@ -2290,7 +2236,7 @@ var script = {
     const closePopperDebounce = debounce_1.debounce(close, closeDelay.value);
 
     const openPopper = async () => {
-      if (invalid.value || manualMode.value) {
+      if (disabled.value || manualMode.value) {
         return;
       }
 
@@ -2326,8 +2272,8 @@ var script = {
      */
 
 
-    watch([hasContent, disabled], ([hasContent, disabled]) => {
-      if (isOpen.value && (!hasContent || disabled)) {
+    watch(disabled, disabled => {
+      if (isOpen.value && disabled) {
         close();
       }
     });
@@ -2413,10 +2359,10 @@ var script = {
 
 };
 
-var css_248z = "\n.popper[data-v-a0197972] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-a0197972]:hover,\n  .popper:hover > .popper__arrow[data-v-a0197972]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-a0197972],\n  .fade-leave-active[data-v-a0197972] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-a0197972],\n  .fade-leave-to[data-v-a0197972] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.popper[data-v-4e8e6007] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-4e8e6007]:hover,\n  .popper:hover > .popper__arrow[data-v-4e8e6007]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-4e8e6007],\n  .fade-leave-active[data-v-4e8e6007] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-4e8e6007],\n  .fade-leave-to[data-v-4e8e6007] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-a0197972";
+script.__scopeId = "data-v-4e8e6007";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
