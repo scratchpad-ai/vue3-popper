@@ -182,6 +182,13 @@
       default: null,
     },
     /**
+     * Controls the adaptive options of computeStyles modifier. [Boolean]
+     */
+    adaptive: {
+      type: Boolean,
+      default: true,
+    },
+    /**
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
@@ -270,6 +277,7 @@
     openDelay,
     placement,
     show,
+    adaptive,
     boundary,
     boundaryPadding,
     container,
@@ -287,6 +295,7 @@
     triggerNode,
     boundary,
     boundaryPadding,
+    adaptive,
   });
 
   const manualMode = computed(() => show.value !== null);

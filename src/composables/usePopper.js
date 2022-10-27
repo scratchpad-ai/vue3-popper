@@ -18,6 +18,7 @@ export default function usePopper({
   triggerNode,
   boundary,
   boundaryPadding,
+  adaptive,
 }) {
   const state = reactive({
     isOpen: false,
@@ -81,33 +82,43 @@ export default function usePopper({
     });
   }
 
+  const modifiers = [
+    preventOverflow,
+    ...customPreventOverflowMidifier,
+    {
+      name: "computeStyles",
+      options: {
+        adaptive,
+        gpuAcceleration: true,
+        roundOffsets: true,
+      },
+    },
+    flip,
+    {
+      name: "flip",
+      enabled: !locked.value,
+    },
+    arrow,
+    {
+      name: "arrow",
+      options: {
+        padding: toInt(arrowPadding.value),
+      },
+    },
+    offset,
+    {
+      name: "offset",
+      options: {
+        offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)],
+      },
+    },
+  ];
+
   const initializePopper = async () => {
     await nextTick();
     const popperOptions = {
       placement: placement.value,
-      modifiers: [
-        preventOverflow,
-        ...customPreventOverflowMidifier,
-        flip,
-        {
-          name: "flip",
-          enabled: !locked.value,
-        },
-        arrow,
-        {
-          name: "arrow",
-          options: {
-            padding: toInt(arrowPadding.value),
-          },
-        },
-        offset,
-        {
-          name: "offset",
-          options: {
-            offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)],
-          },
-        },
-      ],
+      modifiers,
     };
     state.popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions);
 

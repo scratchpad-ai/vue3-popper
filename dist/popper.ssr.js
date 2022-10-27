@@ -1919,7 +1919,8 @@ function usePopper(_ref) {
       popperNode = _ref.popperNode,
       triggerNode = _ref.triggerNode,
       boundary = _ref.boundary,
-      boundaryPadding = _ref.boundaryPadding;
+      boundaryPadding = _ref.boundaryPadding,
+      adaptive = _ref.adaptive;
   var state = vue.reactive({
     isOpen: false,
     popperInstance: null
@@ -2026,6 +2027,28 @@ function usePopper(_ref) {
     });
   }
 
+  var modifiers = [preventOverflow$1].concat(customPreventOverflowMidifier, [{
+    name: "computeStyles",
+    options: {
+      adaptive: adaptive,
+      gpuAcceleration: true,
+      roundOffsets: true
+    }
+  }, flip$1, {
+    name: "flip",
+    enabled: !locked.value
+  }, arrow$1, {
+    name: "arrow",
+    options: {
+      padding: toInt(arrowPadding.value)
+    }
+  }, offset$1, {
+    name: "offset",
+    options: {
+      offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)]
+    }
+  }]);
+
   var initializePopper = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
       var popperOptions;
@@ -2039,20 +2062,7 @@ function usePopper(_ref) {
             case 2:
               popperOptions = {
                 placement: placement.value,
-                modifiers: [preventOverflow$1].concat(customPreventOverflowMidifier, [flip$1, {
-                  name: "flip",
-                  enabled: !locked.value
-                }, arrow$1, {
-                  name: "arrow",
-                  options: {
-                    padding: toInt(arrowPadding.value)
-                  }
-                }, offset$1, {
-                  name: "offset",
-                  options: {
-                    offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)]
-                  }
-                }])
+                modifiers: modifiers
               };
               state.popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions); // Update its position
 
@@ -2261,6 +2271,14 @@ var script = {
     },
 
     /**
+     * Controls the adaptive options of computeStyles modifier. [Boolean]
+     */
+    adaptive: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
@@ -2358,6 +2376,7 @@ var script = {
         openDelay = _toRefs.openDelay,
         placement = _toRefs.placement,
         show = _toRefs.show,
+        adaptive = _toRefs.adaptive,
         boundary = _toRefs.boundary,
         boundaryPadding = _toRefs.boundaryPadding,
         container = _toRefs.container,
@@ -2373,7 +2392,8 @@ var script = {
       popperNode: popperNode,
       triggerNode: triggerNode,
       boundary: boundary,
-      boundaryPadding: boundaryPadding
+      boundaryPadding: boundaryPadding,
+      adaptive: adaptive
     }),
         isOpen = _usePopper.isOpen,
         open = _usePopper.open,
@@ -2571,8 +2591,8 @@ var script = {
       }, 8, ["to"])) : vue.createCommentVNode("", true)], 36);
     };
   }
-};var css_248z = "\n.popper[data-v-4e8e6007] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-4e8e6007]:hover,\n  .popper:hover > .popper__arrow[data-v-4e8e6007]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-4e8e6007],\n  .fade-leave-active[data-v-4e8e6007] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-4e8e6007],\n  .fade-leave-to[data-v-4e8e6007] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-4e8e6007";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.popper[data-v-228f360a] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-228f360a]:hover,\n  .popper:hover > .popper__arrow[data-v-228f360a]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-228f360a],\n  .fade-leave-active[data-v-228f360a] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-228f360a],\n  .fade-leave-to[data-v-228f360a] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-228f360a";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {

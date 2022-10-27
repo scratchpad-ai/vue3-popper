@@ -1868,7 +1868,8 @@ function usePopper({
   popperNode,
   triggerNode,
   boundary,
-  boundaryPadding
+  boundaryPadding,
+  adaptive
 }) {
   const state = reactive({
     isOpen: false,
@@ -1938,24 +1939,33 @@ function usePopper({
     });
   }
 
+  const modifiers = [preventOverflow$1, ...customPreventOverflowMidifier, {
+    name: "computeStyles",
+    options: {
+      adaptive,
+      gpuAcceleration: true,
+      roundOffsets: true
+    }
+  }, flip$1, {
+    name: "flip",
+    enabled: !locked.value
+  }, arrow$1, {
+    name: "arrow",
+    options: {
+      padding: toInt(arrowPadding.value)
+    }
+  }, offset$1, {
+    name: "offset",
+    options: {
+      offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)]
+    }
+  }];
+
   const initializePopper = async () => {
     await nextTick();
     const popperOptions = {
       placement: placement.value,
-      modifiers: [preventOverflow$1, ...customPreventOverflowMidifier, flip$1, {
-        name: "flip",
-        enabled: !locked.value
-      }, arrow$1, {
-        name: "arrow",
-        options: {
-          padding: toInt(arrowPadding.value)
-        }
-      }, offset$1, {
-        name: "offset",
-        options: {
-          offset: [toInt(offsetSkid.value), toInt(offsetDistance.value)]
-        }
-      }]
+      modifiers
     };
     state.popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions); // Update its position
 
@@ -2167,6 +2177,14 @@ var script = {
     },
 
     /**
+     * Controls the adaptive options of computeStyles modifier. [Boolean]
+     */
+    adaptive: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
@@ -2265,6 +2283,7 @@ var script = {
       openDelay,
       placement,
       show,
+      adaptive,
       boundary,
       boundaryPadding,
       container,
@@ -2285,7 +2304,8 @@ var script = {
       popperNode,
       triggerNode,
       boundary,
-      boundaryPadding
+      boundaryPadding,
+      adaptive
     });
     const manualMode = computed(() => show.value !== null);
     const shouldShowPopper = computed(() => isOpen.value && !disabled.value);
@@ -2419,10 +2439,10 @@ var script = {
 
 };
 
-var css_248z = "\n.popper[data-v-4e8e6007] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-4e8e6007]:hover,\n  .popper:hover > .popper__arrow[data-v-4e8e6007]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-4e8e6007],\n  .fade-leave-active[data-v-4e8e6007] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-4e8e6007],\n  .fade-leave-to[data-v-4e8e6007] {\n    opacity: 0;\n}\n";
+var css_248z = "\n.popper[data-v-228f360a] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-228f360a]:hover,\n  .popper:hover > .popper__arrow[data-v-228f360a]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-228f360a],\n  .fade-leave-active[data-v-228f360a] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-228f360a],\n  .fade-leave-to[data-v-228f360a] {\n    opacity: 0;\n}\n";
 styleInject(css_248z);
 
-script.__scopeId = "data-v-4e8e6007";
+script.__scopeId = "data-v-228f360a";
 
 // IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
