@@ -1942,7 +1942,7 @@ function usePopper({
   const modifiers = [preventOverflow$1, ...customPreventOverflowMidifier, {
     name: "computeStyles",
     options: {
-      adaptive,
+      adaptive: adaptive.value,
       gpuAcceleration: true,
       roundOffsets: true
     }

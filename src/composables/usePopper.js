@@ -88,7 +88,7 @@ export default function usePopper({
     {
       name: "computeStyles",
       options: {
-        adaptive,
+        adaptive: adaptive.value,
         gpuAcceleration: true,
         roundOffsets: true,
       },
