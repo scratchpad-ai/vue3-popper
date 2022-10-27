@@ -19,6 +19,7 @@ export default function usePopper({
   boundary,
   boundaryPadding,
   adaptive,
+  gpuAcceleration,
 }) {
   const state = reactive({
     isOpen: false,
@@ -89,7 +90,7 @@ export default function usePopper({
       name: "computeStyles",
       options: {
         adaptive: adaptive.value,
-        gpuAcceleration: true,
+        gpuAcceleration: gpuAcceleration.value,
         roundOffsets: true,
       },
     },

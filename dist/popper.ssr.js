@@ -1920,7 +1920,8 @@ function usePopper(_ref) {
       triggerNode = _ref.triggerNode,
       boundary = _ref.boundary,
       boundaryPadding = _ref.boundaryPadding,
-      adaptive = _ref.adaptive;
+      adaptive = _ref.adaptive,
+      gpuAcceleration = _ref.gpuAcceleration;
   var state = vue.reactive({
     isOpen: false,
     popperInstance: null
@@ -2031,7 +2032,7 @@ function usePopper(_ref) {
     name: "computeStyles",
     options: {
       adaptive: adaptive.value,
-      gpuAcceleration: true,
+      gpuAcceleration: gpuAcceleration.value,
       roundOffsets: true
     }
   }, flip$1, {
@@ -2279,6 +2280,14 @@ var script = {
     },
 
     /**
+     * Controls the gpuAcceleration options of computeStyles modifier. [Boolean]
+     */
+    gpuAcceleration: {
+      type: Boolean,
+      default: true
+    },
+
+    /**
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
@@ -2377,6 +2386,7 @@ var script = {
         placement = _toRefs.placement,
         show = _toRefs.show,
         adaptive = _toRefs.adaptive,
+        gpuAcceleration = _toRefs.gpuAcceleration,
         boundary = _toRefs.boundary,
         boundaryPadding = _toRefs.boundaryPadding,
         container = _toRefs.container,
@@ -2393,7 +2403,8 @@ var script = {
       triggerNode: triggerNode,
       boundary: boundary,
       boundaryPadding: boundaryPadding,
-      adaptive: adaptive
+      adaptive: adaptive,
+      gpuAcceleration: gpuAcceleration
     }),
         isOpen = _usePopper.isOpen,
         open = _usePopper.open,
@@ -2591,8 +2602,8 @@ var script = {
       }, 8, ["to"])) : vue.createCommentVNode("", true)], 36);
     };
   }
-};var css_248z = "\n.popper[data-v-228f360a] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-228f360a]:hover,\n  .popper:hover > .popper__arrow[data-v-228f360a]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-228f360a],\n  .fade-leave-active[data-v-228f360a] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-228f360a],\n  .fade-leave-to[data-v-228f360a] {\n    opacity: 0;\n}\n";
-styleInject(css_248z);script.__scopeId = "data-v-228f360a";// IIFE injects install function into component, allowing component
+};var css_248z = "\n.popper[data-v-346810ce] {\n    transition: background 250ms ease-in-out;\n    background: var(--popper-theme-background-color);\n    padding: var(--popper-theme-padding);\n    color: var(--popper-theme-text-color);\n    border-radius: var(--popper-theme-border-radius);\n    border-width: var(--popper-theme-border-width);\n    border-style: var(--popper-theme-border-style);\n    border-color: var(--popper-theme-border-color);\n    box-shadow: var(--popper-theme-box-shadow);\n    z-index: var(--popper-theme-z-index);\n}\n.popper[data-v-346810ce]:hover,\n  .popper:hover > .popper__arrow[data-v-346810ce]::before {\n    background: var(--popper-theme-background-color-hover);\n}\n.fade-enter-active[data-v-346810ce],\n  .fade-leave-active[data-v-346810ce] {\n    transition: opacity 0.2s ease;\n}\n.fade-enter-from[data-v-346810ce],\n  .fade-leave-to[data-v-346810ce] {\n    opacity: 0;\n}\n";
+styleInject(css_248z);script.__scopeId = "data-v-346810ce";// IIFE injects install function into component, allowing component
 // to be registered via Vue.use() as well as Vue.component(),
 
 var component = /*#__PURE__*/(function () {

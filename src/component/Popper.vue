@@ -189,6 +189,13 @@
       default: true,
     },
     /**
+     * Controls the gpuAcceleration options of computeStyles modifier. [Boolean]
+     */
+    gpuAcceleration: {
+      type: Boolean,
+      default: true,
+    },
+    /**
      * This describes the area that the element will be checked for overflow relative to. [String, Element]
      */
     boundary: {
@@ -278,6 +285,7 @@
     placement,
     show,
     adaptive,
+    gpuAcceleration,
     boundary,
     boundaryPadding,
     container,
@@ -296,6 +304,7 @@
     boundary,
     boundaryPadding,
     adaptive,
+    gpuAcceleration,
   });
 
   const manualMode = computed(() => show.value !== null);
